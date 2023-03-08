@@ -32,14 +32,3 @@ app.use('/deliveries', deliveriesRoutes);
 app.use('/categories', categories);
 
 export default app;
-
-
-// //middlewares
-// app.use(express.json());
-// app.use(express.urlencoded({extended: false}));
-
-// //Rutas
-// app.use(require('./routes/index'));
-
-// app.listen(3000);
-// console.log('Server on port 3000');

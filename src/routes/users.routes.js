@@ -1,12 +1,13 @@
 import { Router } from "express";
 import * as userCtrl from "../controllers/users.controller";
+import { verifyToken } from "../middlewares";
 
 const router = Router();
 
 router.get("/", userCtrl.getUsers);
-router.post("/", userCtrl.createUser);
+router.post("/", verifyToken, userCtrl.createUser);
 router.get("/:userId", userCtrl.getUserById);
-router.put("/:userId", userCtrl.updateUser);
-router.delete("/:userId", userCtrl.deleteUser);
+router.put("/:userId", verifyToken, userCtrl.updateUser);
+router.delete("/:userId", verifyToken, userCtrl.deleteUser);
 
 export default router;
