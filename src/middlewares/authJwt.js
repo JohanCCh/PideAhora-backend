@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
-import config from '../config.js'
+import { SECRET } from '../config.js'
 import { client } from '../database.js'
 
 export const verifyToken = async (req, res, next) => {
     const token = req.headers["x-access-token"];
     if (!token) return res.status(403).json({ message: "No token provided" });
-    const decoded = jwt.verify(token, config.SECRET);
+    const decoded = jwt.verify(token, SECRET);
 
     const query = 'SELECT id, email FROM users WHERE id = $1';
     const values = [decoded.id];

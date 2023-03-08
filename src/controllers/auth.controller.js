@@ -1,7 +1,7 @@
 import { client } from "../database.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import config from '../config.js'
+import { SECRET } from '../config.js'
 
 //registra un usuario
 export const register = async (req, resC) => {
@@ -56,7 +56,7 @@ export const login = async (req, resC) => {
                 const user = res.rows[0];
                 const validPassword = await bcrypt.compare(password, user.password);
                 if (validPassword) {
-                    const token = jwt.sign({ id: user.id }, config.SECRET, {
+                    const token = jwt.sign({ id: user.id }, SECRET, {
                         expiresIn: 60 * 60 * 24
                     });
                     resC.json({ auth: true, token });

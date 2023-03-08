@@ -1,8 +1,9 @@
 import { Client } from 'pg';
+import { URL_DB } from './config';
 
 //conexión a la base de datos
 export const client = new Client({
-    host: 'localhost',
+    host: URL_DB,
     user: 'postgres', //usuario de pgAdmin
     password: 'Admin', //contraseña
     database: 'pideAhora',
