@@ -1,5 +1,7 @@
 import { client } from '../database'
 import bcrypt from 'bcryptjs'
+import jwt from "jsonwebtoken";
+import { SECRET } from '../config.js'
 
 //obtiene todos los usuarios
 export const getUsers = async (req, resC) => {
@@ -106,6 +108,21 @@ export const deleteUser = async (req, resC) => {
                     }
                 }
             });
+        }
+    });
+}
+
+//obtener un usuario por token
+export const getUserByToken = async (req, resC) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, SECRET);
+    const query = 'SELECT * FROM users WHERE id = $1';
+    const values = [decoded.id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json(res.rows);
         }
     });
 }

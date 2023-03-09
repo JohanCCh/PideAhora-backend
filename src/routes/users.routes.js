@@ -9,5 +9,6 @@ router.post("/", verifyToken, userCtrl.createUser);
 router.get("/:userId", userCtrl.getUserById);
 router.put("/:userId", verifyToken, userCtrl.updateUser);
 router.delete("/:userId", verifyToken, userCtrl.deleteUser);
+router.post("/get-user-token", verifyToken, userCtrl.getUserByToken);
 
 export default router;

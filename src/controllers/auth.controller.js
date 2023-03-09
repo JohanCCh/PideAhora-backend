@@ -59,7 +59,7 @@ export const login = async (req, resC) => {
                     const token = jwt.sign({ id: user.id }, SECRET, {
                         expiresIn: 60 * 60 * 24
                     });
-                    resC.json({ auth: true, token });
+                    resC.json({ auth: true, token, user: user });
                 } else {
                     resC.json({ auth: false, message: 'Invalid password' });
                 }
