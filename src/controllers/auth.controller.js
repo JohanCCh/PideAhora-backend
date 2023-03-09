@@ -31,7 +31,7 @@ export const register = async (req, resC) => {
                         resC.json({
                             message: 'User Added successfully',
                             body: {
-                                User: {
+                                user: {
                                     name, email, cryptPassword
                                 }
                             }

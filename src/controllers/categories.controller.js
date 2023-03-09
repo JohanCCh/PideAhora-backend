@@ -35,7 +35,7 @@ export const createCategory = async (req, resC) => {
 
 //obtiene una categoría por id
 export const getCategoryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.categoryId);
     const query = 'SELECT * FROM category WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {
@@ -49,7 +49,7 @@ export const getCategoryById = async (req, resC) => {
 
 //actualiza una categoría por id
 export const updateCategoryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.categoryId);
     const { name } = req.body;
     const query = 'UPDATE category SET name = $1 WHERE id = $2';
     const values = [name, id];
@@ -71,7 +71,7 @@ export const updateCategoryById = async (req, resC) => {
 
 //elimina una categoría por id
 export const deleteCategoryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.categoryId);
     const query = 'DELETE FROM category WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {

@@ -35,7 +35,7 @@ export const createInvoice = async (req, resC) => {
 
 //obtiene una factura por id
 export const getInvoiceById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.invoiceId);
     const query = 'SELECT * FROM invoice WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {
@@ -49,7 +49,7 @@ export const getInvoiceById = async (req, resC) => {
 
 //actualiza una factura por id
 export const updateInvoiceById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.invoiceId);
     const { invoice_user, delivery_commission, total, date } = req.body;
     const query = 'UPDATE invoice SET invoice_user = $1, delivery_commission = $2, total = $3, date = $4 WHERE id = $5';
     const values = [invoice_user, delivery_commission, total, date, id];
@@ -71,7 +71,7 @@ export const updateInvoiceById = async (req, resC) => {
 
 //elimina una factura por id
 export const deleteInvoiceById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.invoiceId);
     const query = 'DELETE FROM invoice WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {

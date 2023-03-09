@@ -36,7 +36,7 @@ export const createDelivery = async (req, resC) => {
 
 //obtiene una entrega por id
 export const getDeliveryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.deliveryId);
     const query = 'SELECT * FROM delivery WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {
@@ -50,7 +50,7 @@ export const getDeliveryById = async (req, resC) => {
 
 //actualiza una entrega por id
 export const updateDeliveryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.deliveryId);
     const { is_delivered, employee, invoice, date } = req.body;
     const query = 'UPDATE delivery SET is_delivered = $1, employee = $2, invoice = $3, date = $4 WHERE id = $5';
     const values = [is_delivered, employee, invoice, date, id];
@@ -72,7 +72,7 @@ export const updateDeliveryById = async (req, resC) => {
 
 //elimina una entrega por id
 export const deleteDeliveryById = async (req, resC) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.deliveryId);
     const query = 'DELETE FROM delivery WHERE id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {

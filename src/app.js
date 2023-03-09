@@ -6,7 +6,8 @@ import productsRoutes from './routes/products.routes';
 import usersRoutes from './routes/users.routes';
 import invoicesRoutes from './routes/invoices.routes';
 import deliveriesRoutes from './routes/deliveries.routes';
-import categories from './routes/categories.routes';
+import categoriesRoutes from './routes/categories.routes';
+import employeesRoutes from './routes/employees.routes';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/products', productsRoutes);
 app.use('/users', usersRoutes);
 app.use('/invoices', invoicesRoutes);
 app.use('/deliveries', deliveriesRoutes);
-app.use('/categories', categories);
+app.use('/categories', categoriesRoutes);
+app.use('/employees', employeesRoutes)
 
 export default app;
