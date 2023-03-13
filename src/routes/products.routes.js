@@ -9,5 +9,6 @@ router.post("/", verifyToken, productsCtrl.createProduct);
 router.get("/:productId", productsCtrl.getProductById);
 router.put("/:productId", verifyToken, productsCtrl.updateProductById);
 router.delete("/:productId", verifyToken, productsCtrl.deleteProductById);
+router.post("/stock/:productId", verifyToken, productsCtrl.subtractStock);
 
 export default router;

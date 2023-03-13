@@ -1,4 +1,6 @@
 import { client } from '../database'
+import jwt from "jsonwebtoken";
+import { SECRET } from '../config.js'
 
 //obtiene todas las entregas
 export const getDeliveries = async (req, resC) => {
@@ -14,9 +16,9 @@ export const getDeliveries = async (req, resC) => {
 
 //crea una entrega
 export const createDelivery = async (req, resC) => {
-    const { is_delivered, employee, invoice, date } = req.body;
-    const query = 'INSERT INTO delivery (is_delivered, employee, invoice, date) VALUES ($1, $2, $3, $4)';
-    const values = [is_delivered, employee, invoice, date];
+    const { is_delivered, invoice, date } = req.body;
+    const query = 'INSERT INTO delivery (is_delivered, invoice, date) VALUES ($1, $2, $3)';
+    const values = [is_delivered, invoice, date];
     client.query(query, values, (err, res) => {
         if (err) {
             console.log(err.stack);
@@ -24,8 +26,8 @@ export const createDelivery = async (req, resC) => {
             resC.json({
                 message: 'Delivery Added successfully',
                 body: {
-                    Delivery: {
-                        is_delivered, employee, invoice, date
+                    delivery: {
+                        is_delivered, invoice, date
                     }
                 }
             });
@@ -89,4 +91,20 @@ export const deleteDeliveryById = async (req, resC) => {
             });
         }
     });
+}
+
+//obtener las entregas de un usuario
+export const getDeliveriesByUser = async (req, resC) => {
+    const token = req.headers['x-access-token'];
+    const decoded = jwt.verify(token, SECRET);
+    const query = 'SELECT * FROM delivery d INNER JOIN invoice i ON d.invoice = i.id WHERE i.invoice_user = $1';
+    const values = [decoded.id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json(res.rows);
+        }
+    });
+
 }

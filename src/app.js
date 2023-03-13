@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes';
 import productsRoutes from './routes/products.routes';
 import usersRoutes from './routes/users.routes';
 import invoicesRoutes from './routes/invoices.routes';
+import invoicesDetailsRoutes from './routes/invoice_details.routes';
 import deliveriesRoutes from './routes/deliveries.routes';
 import categoriesRoutes from './routes/categories.routes';
 import employeesRoutes from './routes/employees.routes';
@@ -32,5 +33,6 @@ app.use('/invoices', invoicesRoutes);
 app.use('/deliveries', deliveriesRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/employees', employeesRoutes)
+app.use('/invoice_details', invoicesDetailsRoutes);
 
 export default app;

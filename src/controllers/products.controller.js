@@ -3,7 +3,7 @@ import { client } from '../database'
 
 //obtiene todos los productos
 export const getProducts = async (req, resC) => {
-    const query = 'SELECT * FROM product';
+    const query = 'SELECT p.id, p.name, p.stock, p.unit_price, p.unit_measure, c.name as category, p.total_purchases, p.date_expiration, p.image_url from product p INNER JOIN category c on p.category = c.id where stock > 0';
     client.query(query, (err, res) => {
         if (err) {
             console.log(err.stack);
@@ -85,6 +85,28 @@ export const deleteProductById = async (req, resC) => {
                 body: {
                     Product: {
                         id
+                    }
+                }
+            });
+        }
+    });
+}
+
+//restar stock de un producto
+export const subtractStock = async (req, resC) => {
+    const id = parseInt(req.params.productId);
+    const { stock } = req.body;
+    const query = 'UPDATE product SET stock = stock - $1 WHERE id = $2';
+    const values = [stock, id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json({
+                message: 'Stock Updated successfully',
+                body: {
+                    Product: {
+                        id, stock
                     }
                 }
             });

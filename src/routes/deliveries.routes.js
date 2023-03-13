@@ -9,5 +9,6 @@ router.post("/", verifyToken, deliveriesCtrl.createDelivery);
 router.get("/:deliveryId", verifyToken, deliveriesCtrl.getDeliveryById);
 router.put("/:deliveryId", verifyToken, deliveriesCtrl.updateDeliveryById);
 router.delete("/:deliveryId", verifyToken, deliveriesCtrl.deleteDeliveryById);
+router.get("/my-deliveries", verifyToken, deliveriesCtrl.getDeliveriesByUser);
 
 export default router;
