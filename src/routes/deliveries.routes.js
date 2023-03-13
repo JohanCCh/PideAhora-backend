@@ -6,9 +6,9 @@ const router = Router();
 
 router.get("/", verifyToken, deliveriesCtrl.getDeliveries);
 router.post("/", verifyToken, deliveriesCtrl.createDelivery);
-router.get("/:deliveryId", verifyToken, deliveriesCtrl.getDeliveryById);
+//router.get("/:deliveryId", verifyToken, deliveriesCtrl.getDeliveryById);
 router.put("/:deliveryId", verifyToken, deliveriesCtrl.updateDeliveryById);
 router.delete("/:deliveryId", verifyToken, deliveriesCtrl.deleteDeliveryById);
-router.get("/my-deliveries", verifyToken, deliveriesCtrl.getDeliveriesByUser);
+router.get("/mydeliveries", verifyToken, deliveriesCtrl.getDeliveriesByUser);
 
 export default router;
