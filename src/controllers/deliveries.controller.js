@@ -4,7 +4,7 @@ import { SECRET } from '../config.js'
 
 //obtiene todas las entregas
 export const getDeliveries = async (req, resC) => {
-    const query = 'SELECT * FROM delivery';
+    const query = 'SELECT * FROM delivery where employee is null';
     client.query(query, (err, res) => {
         if (err) {
             console.log(err.stack);
@@ -72,6 +72,50 @@ export const updateDeliveryById = async (req, resC) => {
     });
 }
 
+//actualizar el estado de una entrega
+export const updateDeliveryState = async (req, resC) => {
+    const id = parseInt(req.params.deliveryId);
+    const { is_delivered } = req.body;
+    const query = 'UPDATE delivery SET is_delivered = $1 WHERE id = $2';
+    const values = [is_delivered, id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json({
+                message: 'Delivery Updated successfully',
+                body: {
+                    Delivery: {
+                        is_delivered
+                    }
+                }
+            });
+        }
+    });
+}
+
+//elegir una entrega
+export const selectDelivery = async (req, resC) => {
+    const id = parseInt(req.params.deliveryId);
+    const { employee } = req.body;
+    const query = 'UPDATE delivery SET employee = $1 WHERE id = $2';
+    const values = [employee, id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json({
+                message: 'Delivery Updated successfully',
+                body: {
+                    Delivery: {
+                        employee
+                    }
+                }
+            });
+        }
+    });
+}
+
 //elimina una entrega por id
 export const deleteDeliveryById = async (req, resC) => {
     const id = parseInt(req.params.deliveryId);
@@ -93,7 +137,7 @@ export const deleteDeliveryById = async (req, resC) => {
     });
 }
 
-//obtener las entregas de un usuario
+//obtener los pedidos de un usuario
 export const getDeliveriesByUser = async (req, resC) => {
     const token = req.headers['x-access-token'];
     const decoded = jwt.verify(token, SECRET);
@@ -103,8 +147,16 @@ export const getDeliveriesByUser = async (req, resC) => {
         if (err) {
             console.log(err.stack);
         } else {
+            console.log(res.rows);
             resC.json(res.rows);
         }
     });
+}
+
+//obtener mi entrega
+export const getMyDelivery = async (req, resC) => {
+    const  id = parseInt(req.params.employeeId);
+    const query = 'SELECT d.id, d.is_delivered, d.employee, i as invoice, d.date as date FROM delivery d INNER JOIN invoice i ON d.invoice = i.id WHERE d.employee = $1 AND d.is_delivered = false';
 
 }
+

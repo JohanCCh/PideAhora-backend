@@ -39,7 +39,7 @@ export const createEmployee = async (req, resC) => {
 export const getEmployeeByToken = async (req, resC) => {
     const token = req.headers["x-access-token"];
     const decoded = jwt.verify(token, SECRET);
-    const query = 'SELECT * FROM employee WHERE id = $1';
+    const query = 'SELECT * FROM employee WHERE user_e = $1';
     const values = [decoded.id];
     client.query(query, values, (err, res) => {
         if (err) {
