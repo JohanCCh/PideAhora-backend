@@ -97,7 +97,7 @@ export const deleteDeliveryById = async (req, resC) => {
 export const getDeliveriesByUser = async (req, resC) => {
     const token = req.headers['x-access-token'];
     const decoded = jwt.verify(token, SECRET);
-    const query = 'SELECT d.id, d.is_delivered, d.employee, i.id as invoice, d.date as delivery_date FROM delivery d INNER JOIN invoice i ON d.invoice = i.id WHERE i.invoice_user = $1';
+    const query = 'SELECT d.id, d.is_delivered, d.employee, i.id as invoice, d.date as date FROM delivery d INNER JOIN invoice i ON d.invoice = i.id WHERE i.invoice_user = $1';
     const values = [decoded.id];
     client.query(query, values, (err, res) => {
         if (err) {

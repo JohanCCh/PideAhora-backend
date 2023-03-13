@@ -1,4 +1,6 @@
-import { client } from '../database'
+import jwt from "jsonwebtoken";
+import { client } from '../database';
+import { SECRET } from '../config.js';
 
 //obtiene todas los empleados
 export const getEmployees = async (req, resC) => {
@@ -34,10 +36,11 @@ export const createEmployee = async (req, resC) => {
 }
 
 //obtiene un empleado por id
-export const getEmployeeById = async (req, resC) => {
-    const id = parseInt(req.params.employeeId);
+export const getEmployeeByToken = async (req, resC) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, SECRET);
     const query = 'SELECT * FROM employee WHERE id = $1';
-    const values = [id];
+    const values = [decoded.id];
     client.query(query, values, (err, res) => {
         if (err) {
             console.log(err.stack);

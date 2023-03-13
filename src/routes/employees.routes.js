@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", verifyToken, employeeCtrl.createEmployee);
 router.get("/", employeeCtrl.getEmployees);
-router.get("/:employeeId", employeeCtrl.getEmployeeById);
+router.get("/token", employeeCtrl.getEmployeeByToken);
 router.put("/:employeeId", verifyToken, employeeCtrl.updateEmployeeById);
 router.delete("/:employeeId", verifyToken, employeeCtrl.deleteEmployeeById);
 

@@ -4,7 +4,7 @@ import { verifyToken } from "../middlewares";
 
 const router = Router();
 
-router.get("/", verifyToken, deliveriesCtrl.getDeliveries);
+router.get("/", deliveriesCtrl.getDeliveries);
 router.post("/", verifyToken, deliveriesCtrl.createDelivery);
 //router.get("/:deliveryId", verifyToken, deliveriesCtrl.getDeliveryById);
 router.put("/:deliveryId", verifyToken, deliveriesCtrl.updateDeliveryById);
