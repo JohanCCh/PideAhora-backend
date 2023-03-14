@@ -11,5 +11,6 @@ router.put("/select_d/:deliveryId", verifyToken, deliveriesCtrl.selectDelivery);
 router.put("/is_delivered/:deliveryId", verifyToken, deliveriesCtrl.updateDeliveryState);
 router.delete("/:deliveryId", verifyToken, deliveriesCtrl.deleteDeliveryById);
 router.get("/mydeliveries", verifyToken, deliveriesCtrl.getDeliveriesByUser);
+router.get("/myOrder/:deliveryId", verifyToken, deliveriesCtrl.getMyDelivery);
 
 export default router;

@@ -7,7 +7,7 @@ export const getInvoices = async (req, resC) => {
     const query = 'SELECT * FROM invoice';
     client.query(query, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('i1: ' + err.stack);
         } else {
             resC.json(res.rows);
         }
@@ -23,7 +23,7 @@ export const createInvoice = async (req, resC) => {
     const values = [decoded.id, delivery_commission, total, date];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('i2: ' + err.stack);
         } else {
             const id = res.rows[0].id;
             const user_id = decoded.id;
@@ -42,11 +42,11 @@ export const createInvoice = async (req, resC) => {
 //obtiene una factura por id
 export const getInvoiceById = async (req, resC) => {
     const id = parseInt(req.params.invoiceId);
-    const query = 'SELECT * FROM invoice WHERE id = $1';
+    const query = 'SELECT i.*, u.name as name_user FROM invoice i INNER JOIN users u ON u.id = i.invoice_user WHERE i.id = $1';
     const values = [id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('i3: ' + err.stack);
         } else {
             resC.json(res.rows);
         }
@@ -61,7 +61,7 @@ export const updateInvoiceById = async (req, resC) => {
     const values = [invoice_user, delivery_commission, total, date, id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('i4: ' + err.stack);
         } else {
             resC.json({
                 message: 'Invoice Updated successfully',
@@ -82,7 +82,7 @@ export const deleteInvoiceById = async (req, resC) => {
     const values = [id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('i5: ' + err.stack);
         } else {
             resC.json({
                 message: 'Invoice deleted successfully',

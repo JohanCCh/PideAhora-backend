@@ -74,7 +74,7 @@ var createUser = /*#__PURE__*/function () {
                     resC.json({
                       message: 'User Added successfully',
                       body: {
-                        User: {
+                        user: {
                           name: name,
                           email: email,
                           cryptPassword: cryptPassword
@@ -149,7 +149,7 @@ var updateUser = /*#__PURE__*/function () {
               resC.json({
                 message: 'User Updated successfully',
                 body: {
-                  User: {
+                  user: {
                     name: name,
                     cryptPassword: cryptPassword
                   }
@@ -185,7 +185,7 @@ var deleteUser = /*#__PURE__*/function () {
               resC.json({
                 message: 'User Deleted successfully',
                 body: {
-                  User: {
+                  user: {
                     id: id
                   }
                 }

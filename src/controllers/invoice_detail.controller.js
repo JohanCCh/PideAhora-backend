@@ -6,7 +6,7 @@ export const getInvoiceDetails = async (req, resC) => {
     const query = 'SELECT * FROM invoice_detail';
     client.query(query, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('d1:' + err.stack);
         } else {
             resC.json(res.rows);
         }
@@ -20,13 +20,13 @@ export const createInvoiceDetail = async (req, resC) => {
     const values = [invoice, product, quantity];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('d2:' + err.stack);
         } else {
             const query1 = 'UPDATE product SET stock = stock - $1 WHERE id = $2';
             const values1 = [quantity, product];
             client.query(query1, values1, (err, res1) => {
                 if (err) {
-                    console.log(err.stack);
+                    console.log('d2-1:' + err.stack);
                 } else {
                     //console.log(res);
                     const id = res.rows[0].id;
@@ -51,7 +51,7 @@ export const getInvoiceDetailById = async (req, resC) => {
     const values = [id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('d3:' + err.stack);
         } else {
             resC.json(res.rows);
         }
@@ -66,7 +66,7 @@ export const updateInvoiceDetailById = async (req, resC) => {
     const values = [invoice, product, quantity, id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('d4:' + err.stack);
         } else {
             resC.json({
                 message: 'Invoice Detail Updated successfully',
@@ -87,7 +87,7 @@ export const deleteInvoiceDetailById = async (req, resC) => {
     const values = [id];
     client.query(query, values, (err, res) => {
         if (err) {
-            console.log(err.stack);
+            console.log('d5:' + err.stack);
         } else {
             resC.json({
                 message: 'Invoice Detail Deleted successfully',
@@ -97,6 +97,20 @@ export const deleteInvoiceDetailById = async (req, resC) => {
                     }
                 }
             });
+        }
+    });
+}
+
+//obtener detalles de factura por factura
+export const getInvoiceDetailsByInvoice = async (req, resC) => {
+    const id = parseInt(req.params.invoiceId);
+    const query = 'SELECT i.id, i.quantity, pr.name, pr.unit_price, pr.unit_measure  FROM invoice_detail i INNER JOIN product pr on pr.id = i.product WHERE invoice = $1';
+    const values = [id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log('d6:' + err.stack);
+        } else {
+            resC.json(res.rows);
         }
     });
 }

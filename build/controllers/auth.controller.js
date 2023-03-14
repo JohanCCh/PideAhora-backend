@@ -49,7 +49,7 @@ var register = /*#__PURE__*/function () {
                     resC.json({
                       message: 'User Added successfully',
                       body: {
-                        User: {
+                        user: {
                           name: name,
                           email: email,
                           cryptPassword: cryptPassword

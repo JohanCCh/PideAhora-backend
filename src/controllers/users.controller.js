@@ -43,7 +43,7 @@ export const createUser = async (req, resC) => {
                         resC.json({
                             message: 'User Added successfully',
                             body: {
-                                User: {
+                                user: {
                                     name, email, cryptPassword
                                 }
                             }
@@ -83,8 +83,30 @@ export const updateUser = async (req, resC) => {
             resC.json({
                 message: 'User Updated successfully',
                 body: {
-                    User: {
+                    user: {
                         name, cryptPassword
+                    }
+                }
+            });
+        }
+    });
+}
+
+//actualiza la dirección de un usuario por token
+export const updateAddress = async (req, resC) => {
+    const id = parseInt(req.params.userId);
+    const { address } = req.body;
+    const query = 'UPDATE users SET address = $1 WHERE id = $2';
+    const values = [address, id];
+    client.query(query, values, (err, res) => {
+        if (err) {
+            console.log(err.stack);
+        } else {
+            resC.json({
+                message: 'Address Updated successfully',
+                body: {
+                    user: {
+                        id, address
                     }
                 }
             });
@@ -103,7 +125,7 @@ export const deleteUser = async (req, resC) => {
             resC.json({
                 message: 'User Deleted successfully',
                 body: {
-                    User: {
+                    user: {
                         id
                     }
                 }
@@ -114,7 +136,7 @@ export const deleteUser = async (req, resC) => {
 
 //obtener un usuario por token
 export const getUserByToken = async (req, resC) => {
-    const token = req.headers["x-access-token"];
+    const token = req.headers['x-access-token'];
     const decoded = jwt.verify(token, SECRET);
     const query = 'SELECT * FROM users WHERE id = $1';
     const values = [decoded.id];
